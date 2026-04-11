@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="StationHub - Order stationery, books & academic resources online for bbuc-BBUC students. Fast campus delivery/pickup."
+    />
+    <meta
+      name="keywords"
+      content="bbuc stationery online, buy exercise books bbuc, campus cart Uganda, student supplies"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StationHub | bbuc Campus Essentials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="images/favicon.jpg" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- NAVBAR -->
+    <nav
+      id="navbar"
+      class="bg-[#1e3a8a] text-white sticky top-0 z-50 shadow-md hidden"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center"
+      >
+        <div
+          class="flex items-center gap-3 cursor-pointer"
+          onclick="navigateTo('home')"
+        >
+          <div
+            class="w-9 h-9 bg-white rounded-2xl flex items-center justify-center text-[#1e3a8a] text-2xl font-bold"
+          >
+            <img
+              src="Images/Logo.jpg"
+              alt="website logo"
+              style="border-radius: 50%; width: 100%; height: 100%"
+            />
+          </div>
+          <div>
+            <span class="heading text-2xl tracking-tight">StationHub</span>
+            <p class="text-xs -mt-1 text-emerald-300">bbuc • BBUC</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a
+            href="#"
+            onclick="
+              navigateTo('home');
+              return false;
+            "
+            class="hover:text-emerald-300 transition"
+            >Home</a
+          >
+          <a
+            href="#"
+            onclick="
+              navigateTo('shop');
+              return false;
+            "
+            class="hover:text-emerald-300 transition"
+            >Shop</a
+          >
+          <a
+            href="#"
+            onclick="
+              navigateTo('account');
+              return false;
+            "
+            class="hover:text-emerald-300 transition"
+            >Account</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <div onclick="toggleCart()" class="cursor-pointer relative">
+            <i class="fa-solid fa-cart-shopping text-xl"></i>
+            <span
+              id="cart-count"
+              class="absolute -top-2 -right-2 bg-emerald-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+              >0</span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-user-circle text-2xl text-emerald-300"></i>
+            <span
+              id="nav-user-name"
+              class="text-sm font-medium hidden md:inline"
+            ></span>
+            <button
+              onclick="logout()"
+              class="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full transition ml-2"
+            >
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span class="hidden md:inline">Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- LOGIN PAGE -->
+    <div
+      id="login-page"
+      class="page active-page min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1e3a8a] to-[#10b981] p-6"
+    >
+      <div
+        class="bg-white/95 backdrop-blur-sm max-w-md w-full rounded-3xl shadow-2xl p-8"
+      >
+        <div class="text-center mb-8">
+          <div
+            class="w-20 h-20 bg-gradient-to-br from-[#1e3a8a] to-[#10b981] rounded-3xl flex items-center justify-center text-white text-5xl mx-auto mb-4 shadow-lg"
+          >
+            <img
+              src="Images/Logo.jpg"
+              alt="website logo"
+              style="border-radius: 50%; width: 100%; height: 100%"
+            />
+          </div>
+          <h1 class="heading text-3xl text-gray-800">Welcome to StationHub</h1>
+          <p class="text-gray-500 mt-2">bbuc Campus Essentials Store</p>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Student Email</label
+            >
+            <input
+              id="login-email"
+              type="email"
+              placeholder="student@bbuc.ac.ug"
+              class="w-full border border-gray-300 rounded-2xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Password</label
+            >
+            <input
+              id="login-password"
+              type="password"
+              placeholder="••••••"
+              class="w-full border border-gray-300 rounded-2xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+          <button
+            onclick="handleLogin()"
+            class="w-full bg-[#1e3a8a] text-white py-3 rounded-2xl font-semibold hover:bg-[#152c6b] transition flex items-center justify-center gap-2 btn-md"
+          >
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login to Shop
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app-container" class="hidden">
+      <!-- HERO SLIDER with matching campus/stationery images -->
+      <div id="home-page" class="page">
+        <div id="hero-slider" class="relative">
+          <div
+            class="slide active"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&h=1080&fit=crop');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/85 to-[#10b981]/75"
+            ></div>
+            <div class="slide-content relative z-10 text-white">
+              <div class="max-w-2xl">
+                <h1 class="heading text-5xl md:text-6xl leading-tight mb-5">
+                  No more queues at the bookshop.<br />Your campus cart is here.
+                </h1>
+                <p class="text-xl md:text-2xl mb-8">
+                  Stationery, books & academic resources. Delivered to your
+                  hostel or picked up in minutes.
+                </p>
+                <button
+                  onclick="navigateTo('shop')"
+                  class="bg-white text-[#1e3a8a] btn-md text-lg font-semibold flex items-center gap-2 hover:scale-105 transition shadow-lg"
+                >
+                  Shop Now <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=1920&h=1080&fit=crop');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/85 to-[#10b981]/75"
+            ></div>
+            <div class="slide-content relative z-10 text-white">
+              <div class="max-w-2xl">
+                <h1 class="heading text-5xl md:text-6xl leading-tight mb-5">
+                  Everything you need for exams & assignments.
+                </h1>
+                <p class="text-xl md:text-2xl mb-8">
+                  A4 books, pens, files, calculators & recommended textbooks –
+                  all in one place.
+                </p>
+                <button
+                  onclick="navigateTo('shop')"
+                  class="bg-white text-[#1e3a8a] btn-md text-lg font-semibold flex items-center gap-2 hover:scale-105 transition"
+                >
+                  Browse Catalogue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/85 to-[#10b981]/75"
+            ></div>
+            <div class="slide-content relative z-10 text-white">
+              <div class="max-w-2xl">
+                <h1 class="heading text-5xl md:text-6xl leading-tight mb-5">
+                  Order from anywhere on campus.
+                </h1>
+                <p class="text-xl md:text-2xl mb-8">
+                  Add to cart • Pay with Mobile Money. Real-time stock for
+                  bbuc-BBUC students.
+                </p>
+                <button
+                  onclick="navigateTo('shop')"
+                  class="bg-white text-[#1e3a8a] btn-md text-lg font-semibold flex items-center gap-2 hover:scale-105 transition"
+                >
+                  Start Shopping <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1920&h=1080&fit=crop');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/85 to-[#10b981]/75"
+            ></div>
+            <div class="slide-content relative z-10 text-white">
+              <div class="max-w-2xl">
+                <h1 class="heading text-5xl md:text-6xl leading-tight mb-5">
+                  Pick up at the library or get delivered to your hostel.
+                </h1>
+                <p class="text-xl md:text-2xl mb-8">
+                  Zero hassle. Real stock. Student-first pricing.
+                </p>
+                <button
+                  onclick="navigateTo('shop')"
+                  class="bg-white text-[#1e3a8a] btn-md text-lg font-semibold flex items-center gap-2 hover:scale-105 transition"
+                >
+                  Shop Now <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            onclick="prevSlide()"
+            class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full z-30 transition"
+          >
+            <i class="fa-solid fa-chevron-left text-xl"></i>
+          </button>
+          <button
+            onclick="nextSlide()"
+            class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full z-30 transition"
+          >
+            <i class="fa-solid fa-chevron-right text-xl"></i>
+          </button>
+          <div
+            class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30"
+          >
+            <button
+              onclick="goToSlide(0)"
+              id="dot-0"
+              class="w-2.5 h-2.5 rounded-full bg-white/70"
+            ></button>
+            <button
+              onclick="goToSlide(1)"
+              id="dot-1"
+              class="w-2.5 h-2.5 rounded-full bg-white/70"
+            ></button>
+            <button
+              onclick="goToSlide(2)"
+              id="dot-2"
+              class="w-2.5 h-2.5 rounded-full bg-white/70"
+            ></button>
+            <button
+              onclick="goToSlide(3)"
+              id="dot-3"
+              class="w-2.5 h-2.5 rounded-full bg-white/70"
+            ></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOP PAGE with MATCHING product images -->
+      <div id="shop-page" class="page max-w-7xl mx-auto px-6 py-10">
+        <h2 class="heading text-3xl md:text-4xl mb-6">📖 Our Catalogue</h2>
+        <div class="flex flex-col md:flex-row gap-4 mb-8">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search notebooks, pens..."
+            class="flex-1 max-w-sm border border-gray-300 rounded-2xl px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+          <select
+            id="category-filter"
+            class="border border-gray-300 rounded-2xl px-5 py-2.5 bg-white"
+          >
+            <option value="">All Categories</option>
+            <option value="Notebooks">Notebooks</option>
+            <option value="Pens">Pens & Pencils</option>
+            <option value="Files">Files & Folders</option>
+            <option value="Books">Textbooks & Equipment</option>
+          </select>
+        </div>
+        <div
+          id="product-grid"
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        ></div>
+      </div>
+
+      <!-- ACCOUNT PAGE -->
+      <div id="account-page" class="page max-w-7xl mx-auto px-6 py-10">
+        <div class="bg-white rounded-3xl shadow-lg p-8">
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8"
+          >
+            <div>
+              <h2 class="heading text-3xl flex items-center gap-3">
+                <i class="fa-solid fa-user-graduate text-emerald-600"></i> My
+                Account
+              </h2>
+              <p class="text-gray-600 mt-1">
+                Welcome back,
+                <span id="user-name" class="font-semibold"></span>!
+              </p>
+            </div>
+            <div class="mt-4 md:mt-0">
+              <span
+                class="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium"
+                ><i class="fa-solid fa-graduation-cap"></i> STUDENT</span
+              >
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="font-semibold text-xl mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-receipt text-emerald-600"></i> Your Orders
+              </h3>
+              <div
+                id="order-list"
+                class="space-y-3 max-h-96 overflow-y-auto pr-2"
+              ></div>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6">
+              <h3 class="font-semibold text-xl mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-emerald-600"></i> Profile
+                Info
+              </h3>
+              <div class="space-y-3 text-gray-700">
+                <p>
+                  <i class="fa-solid fa-envelope w-6 text-emerald-600"></i>
+                  <span id="profile-email"></span>
+                </p>
+                <p>
+                  <i class="fa-solid fa-location-dot w-6 text-emerald-600"></i>
+                  bbuc Main Campus, Kabale
+                </p>
+                <p>
+                  <i class="fa-solid fa-truck w-6 text-emerald-600"></i>
+                  Delivery: Hostel / Library Pickup
+                </p>
+                <hr class="my-4" />
+                <p class="text-sm text-gray-500">
+                  <i class="fa-regular fa-clock"></i> Member since 2026
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CART MODAL -->
+      <div
+        id="cart-modal"
+        onclick="if (event.target.id === 'cart-modal') toggleCart();"
+        class="hidden fixed inset-0 bg-black/70 flex items-end md:items-center justify-center z-[9999]"
+      >
+        <div
+          onclick="event.stopPropagation()"
+          class="bg-white w-full max-w-lg rounded-t-3xl md:rounded-3xl p-6 max-h-[90vh] overflow-auto"
+        >
+          <h3 class="heading text-2xl mb-5 flex items-center gap-3">
+            <i class="fa-solid fa-cart-shopping text-emerald-600"></i> Your Cart
+          </h3>
+          <div id="cart-items" class="space-y-5"></div>
+          <div class="border-t pt-5 mt-6">
+            <div class="flex justify-between text-xl font-semibold">
+              <span>Total</span><span id="cart-total">UGX 0</span>
+            </div>
+            <button
+              onclick="checkout()"
+              class="w-full mt-5 bg-emerald-500 text-white py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-emerald-600 transition btn-md"
+            >
+              <i class="fa-solid fa-credit-card"></i> Proceed to Checkout (Mock
+              Mobile Money)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="bg-[#1e3a8a] text-white pt-12 pb-6 mt-12">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div
+                class="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-[#1e3a8a] text-2xl"
+              >
+                📚
+              </div>
+              <span class="heading text-2xl">StationHub</span>
+            </div>
+            <p class="text-emerald-300 text-sm">
+              Your official BBUC digital stationery marketplace.
+            </p>
+            <div class="flex gap-4 mt-5">
+              <a href="#" class="text-xl hover:text-emerald-400"
+                ><i class="fa-brands fa-instagram"></i></a
+              ><a href="#" class="text-xl hover:text-emerald-400"
+                ><i class="fa-brands fa-whatsapp"></i></a
+              ><a href="#" class="text-xl hover:text-emerald-400"
+                ><i class="fa-brands fa-facebook"></i
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3 text-emerald-300">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  onclick="
+                    navigateTo('shop');
+                    return false;
+                  "
+                  class="hover:text-emerald-400 cursor-pointer"
+                  >Shop All Products</a
+                >
+              </li>
+              <li>
+                <a
+                  onclick="
+                    navigateTo('account');
+                    return false;
+                  "
+                  class="hover:text-emerald-400 cursor-pointer"
+                  >My Account</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-emerald-400">Track Order</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3 text-emerald-300">For Students</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="#" class="hover:text-emerald-400"
+                  >Recommended Textbooks</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-emerald-400">Bulk Orders</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-emerald-400">Hostel Delivery</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3 text-emerald-300">Contact</h4>
+            <p class="flex items-center gap-2 text-sm">
+              <i class="fa-solid fa-phone"></i> +256 700 123 456
+            </p>
+            <p class="flex items-center gap-2 text-sm">
+              <i class="fa-solid fa-envelope"></i> support@stationhub.bbuc.ac.ug
+            </p>
+            <div class="mt-6 text-xs text-emerald-400">
+              © 2026 StationHub • BBUC
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="scripts.js"></script>
+  </body>
+</html>
